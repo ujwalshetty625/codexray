@@ -1,0 +1,23 @@
+services:
+  - type: web
+    name: codexray-backend
+    runtime: python
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: DATABASE_URL
+        sync: false
+      - key: GITHUB_TOKEN
+        sync: false
+      - key: ALLOWED_ORIGINS
+        sync: false
+      - key: ENV
+        value: production
+      - key: LOG_LEVEL
+        value: INFO
+
+databases:
+  - name: codexray-db
+    databaseName: codexray
+    user: postgres
