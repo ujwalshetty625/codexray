@@ -1,10 +1,11 @@
+import os
 import shutil
 import logging
 from pathlib import Path
 
 logger = logging.getLogger(__name__)
 
-DEFAULT_WORKSPACE_ROOT = Path("/workspace/repos")
+DEFAULT_WORKSPACE_ROOT = Path(os.environ.get("WORKSPACE_ROOT", "/tmp/workspace/repos"))
 
 
 class WorkspaceError(Exception):
@@ -12,8 +13,8 @@ class WorkspaceError(Exception):
 
 
 class WorkspaceManager:
-    def __init__(self, workspace_root: Path = DEFAULT_WORKSPACE_ROOT):
-        self._root = workspace_root
+    def __init__(self, workspace_root: Path | None = None):
+        self._root = workspace_root or DEFAULT_WORKSPACE_ROOT
 
     def get_workspace_root(self) -> Path:
         return self._root
